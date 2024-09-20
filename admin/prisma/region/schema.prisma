@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/region-client"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("regionalCockroachdbURI")
+}
+
+model UserCr {
+  uid       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  crName    String   @unique
+  userUid   String   @unique @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @db.Timestamptz(3)
+}
+
+model UserWorkspace {
+  uid          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt    DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime   @db.Timestamptz(3)
+  workspaceUid String     @db.Uuid
+  userCrUid    String     @db.Uuid
+  handlerUid   String?    @db.Uuid
+  role         Role       @default(DEVELOPER)
+  status       JoinStatus
+  isPrivate    Boolean
+  joinAt       DateTime?  @db.Timestamptz(3)
+
+  @@unique([workspaceUid, userCrUid])
+  @@index([userCrUid])
+}
+
+model Workspace {
+  uid         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String   @unique
+  displayName String
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @db.Timestamptz(3)
+}
+
+enum JoinStatus {
+  INVITED
+  IN_WORKSPACE
+  NOT_IN_WORKSPACE
+}
+
+enum Role {
+  MANAGER
+  DEVELOPER
+  OWNER
+}

@@ -1,6 +1,16 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import { GeistSans } from "geist/font/sans";
+import { type AppType } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+import { api } from "~/utils/api";
+
+import "~/styles/globals.css";
+
+const MyApp: AppType = ({ Component, pageProps }) => {
+  return (
+    <div className={GeistSans.className}>
+      <Component {...pageProps} />
+    </div>
+  );
+};
+
+export default api.withTRPC(MyApp);
