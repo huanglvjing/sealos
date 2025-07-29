@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM node:20.4.0-alpine AS base
+FROM node:20.18.0-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 WORKDIR /app
@@ -55,10 +55,9 @@ ARG path
 COPY ${path} ${path}
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --frozen-lockfile --filter=$name install && pnpm --filter=$name run build
-RUN if [ "$name" = "desktop" ]; then \
-    cp -r ./desktop/prisma/global/migrations desktop/.next/standalone/desktop/prisma/global/migrations; \
-    cp -r ./desktop/prisma/region/migrations desktop/.next/standalone/desktop/prisma/region/migrations; \
-fi
+# RUN if [ "$name" = "admin" ]; then \
+#     cp -r ./admin/prisma admin/.next/standalone/admin/prisma; \
+# fi
 # Production image, copy all the files and run next
 FROM base AS runner
 
@@ -77,23 +76,17 @@ RUN apk add curl \
 ARG name
 ARG path
 
-# Install Git and OpenSSH client if $name is equal to template
-RUN if [ "$name" = "template" ]; then \
-    apk add --no-cache git openssh-client; \
-fi
-RUN if [ "$name" = "desktop" ]; then \
-    npm install -g prisma@5.10.2; \
-fi
+# RUN if [ "$name" = "admin" ]; then \
+#     npm install -g prisma@5.14.0; \
+# fi
 USER nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/$path/next.config.js ./$path/next.config.js
-RUN if ["$name" = "objectstorage" ]; then \
-  COPY --from=builder /app/$path/next-i18next.config.js ./$path/next-i18next.config.js; \
-  fi
 COPY --from=builder /app/$path/public ./$path/public
 COPY --from=builder --chown=nextjs:nodejs /app/$path/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/$path/.next/static ./$path/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/$path/next-i18next.config.cjs ./$path/next-i18next.config.cjs
 EXPOSE 3000
 
 ENV PORT 3000

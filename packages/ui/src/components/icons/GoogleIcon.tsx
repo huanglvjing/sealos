@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from "@chakra-ui/react";
 export default function GoogleIcon(props: Parameters<typeof Icon>[0]) {
   return (
     <Icon
@@ -24,7 +24,7 @@ export default function GoogleIcon(props: Parameters<typeof Icon>[0]) {
       <path
         d="M18.278 10.0001C18.278 9.51461 18.201 8.99132 18.0868 8.50586H10.2539V11.6813H14.7623C14.5374 12.7643 13.9238 13.5966 13.0461 14.1381L15.731 16.171C17.2742 14.7685 18.278 12.6796 18.278 10.0001Z"
         fill="#24282C"
-      />{' '}
+      />{" "}
     </Icon>
   );
 }

@@ -1,0 +1,3 @@
+import { FieldHelperProps, FieldInputProps, FormikValues, useFormik } from "formik";
+export const getFormikHelper = <Values extends FormikValues>(formik: ReturnType<typeof useFormik<Values>>) =><T extends keyof Values>(field: T)=> formik.getFieldHelpers(field as string)as FieldHelperProps<Values[T]>;
+export const getFormikFieldProps = <Values extends FormikValues>(formik: ReturnType<typeof useFormik<Values>>) => <T extends keyof Values>(field: T) => formik.getFieldProps(field as string) as FieldInputProps<Values[T]>;

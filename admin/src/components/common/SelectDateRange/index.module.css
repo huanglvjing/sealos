@@ -1,0 +1,21 @@
+.root {
+  --rdp-cell-size: 40px;
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-accent-color: black;
+  --rdp-background-color: #f4f6f8;
+  /* Switch to dark colors for dark themes */
+  /* // --rdp-accent-color-dark: #3003e1; */
+  /* // --rdp-background-color-dark: #180270; */
+  /* Outline border for focused elements */
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  /* Outline border for focused and selected elements */
+  --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75);
+  --rdp-range_start-background: #111824;
+  --rdp-range_start-color: #ffffff;
+  --rdp-range_end-background: #111824;
+  --rdp-range_end-color: #ffffff;
+  --rdp-selected-border: 2px solid rgba(0, 0, 0, 0.75);
+  --rdp-range_middle-background-color: #f0f1f6;
+  /* --rdp-range_middle-foreground-color: #111824; */
+}

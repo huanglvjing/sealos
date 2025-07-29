@@ -1,0 +1,14 @@
+{
+  "APP": "APP",
+  "APP-STORE": "APP-STORE",
+  "All APP": "ALL APP",
+  "CLOUD-VM": "CLOUD-VM",
+  "DB": "DATABASE",
+  "DB-BACKUP": "DB-BACKUP",
+  "JOB": "JOB",
+  "OBJECT-STORAGE": "OBJECT-STORAGE",
+  "OTHER": "OTHER",
+  "TERMINAL": "TERMINAL",
+  "all_app_type": "ALL APP TYPE",
+  "deploy_count": "Deploy Count"
+}

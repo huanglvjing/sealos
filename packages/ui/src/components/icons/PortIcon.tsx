@@ -1,10 +1,16 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const PortIcon = createIcon({
-  displayName: 'PortIcon',
-  viewBox: '0 0 16 16',
+  displayName: "PortIcon",
+  viewBox: "0 0 16 16",
   path: (
-    <g width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M3.93331 5.73697C3.93331 5.36878 4.23179 5.0703 4.59998 5.0703C4.96817 5.0703 5.26664 5.36878 5.26664 5.73697V6.6703C5.26664 7.03849 4.96817 7.33697 4.59998 7.33697C4.23179 7.33697 3.93331 7.03849 3.93331 6.6703V5.73697Z"
         fill="#485264"
@@ -28,6 +34,6 @@ const PortIcon = createIcon({
         fill="#485264"
       />
     </g>
-  )
+  ),
 });
 export default PortIcon;

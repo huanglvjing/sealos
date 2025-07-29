@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/react';
+import { Icon, IconProps } from "@chakra-ui/react";
 
 export default function SealosCoin(props: IconProps) {
   return (
@@ -10,7 +10,14 @@ export default function SealosCoin(props: IconProps) {
       fill="none"
       {...props}
     >
-      <circle cx="10" cy="10" r="9.66" fill="#E8E8E8" stroke="#37383A" strokeWidth="0.68" />
+      <circle
+        cx="10"
+        cy="10"
+        r="9.66"
+        fill="#E8E8E8"
+        stroke="#37383A"
+        strokeWidth="0.68"
+      />
       <circle cx="9.99995" cy="10" r="8.7366" fill="#CFCFCF" />
       <path
         d="M10.0001 18.7366C14.8252 18.7366 18.7367 14.8251 18.7367 10C18.7367 8.01946 18.0776 6.19283 16.9669 4.72746C16.4078 4.64858 15.8365 4.60779 15.2557 4.60779C8.98439 4.60779 3.82381 9.36328 3.18328 15.4649C4.78448 17.4596 7.24314 18.7366 10.0001 18.7366Z"

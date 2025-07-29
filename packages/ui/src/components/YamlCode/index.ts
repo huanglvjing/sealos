@@ -1,2 +1,2 @@
-import YamlCode from './YamlCode';
+import YamlCode from "./YamlCode";
 export default YamlCode;

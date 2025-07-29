@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from "@chakra-ui/react";
 export default function WechatIcon(props: Parameters<typeof Icon>[0]) {
   return (
     <Icon

@@ -1,0 +1,33 @@
+{
+  "address": "地址",
+  "bank_account": "银行账号",
+  "bank_name": "开户银行名称",
+  "billing_id": "账单 ID",
+  "commit_time": "提交时间",
+  "company_name": "公司名",
+  "complete_time": "完成时间",
+  "fax": "传真",
+  "invoice_amount": "开票金额",
+  "invoice_application": "开票申请",
+  "invoice_details": "发票详情",
+  "invoice_file": "发票文件",
+  "invoice_status": {
+    "_self": "开票状态",
+    "all": "全部",
+    "canceled": "已取消",
+    "completed": "已审核",
+    "pending": "待审核"
+  },
+  "invoice_title": "发票抬头",
+  "invoice_type": {
+    "_self": "发票类型",
+    "all": "全部",
+    "normal": "增值税普通发票",
+    "special": "增值税专用发票"
+  },
+  "person": "联系人",
+  "please_upload_invoice_file": "请上传发票文件",
+  "send_invoice_failed": "上传发票失败",
+  "send_invoice_success": "上传发票成功",
+  "tax_registration_number": "税务登记证号"
+}

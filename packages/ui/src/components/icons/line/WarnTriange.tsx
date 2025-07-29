@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const WarnTriangeIcon = createIcon({
-  displayName: 'WarnTriangeIcon',
-  viewBox: '0 0 25 24',
+  displayName: "WarnTriangeIcon",
+  viewBox: "0 0 25 24",
   path: (
     <g>
       <g clipPath="url(#clip0_411_809)">
@@ -14,11 +14,16 @@ const WarnTriangeIcon = createIcon({
       </g>
       <defs>
         <clipPath id="clip0_411_809">
-          <rect width="24" height="24" fill="white" transform="translate(0.899872)" />
+          <rect
+            width="24"
+            height="24"
+            fill="white"
+            transform="translate(0.899872)"
+          />
         </clipPath>
       </defs>
     </g>
-  )
+  ),
 });
 
 export default WarnTriangeIcon;

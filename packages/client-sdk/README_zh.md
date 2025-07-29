@@ -86,8 +86,8 @@ SDK 设计文档: [SDK Design](https://doc.weixin.qq.com/doc/w3_Aa0APAbqAE0qKaX1
 
 ### 增加 API
 
-1. 增加 constants/app.ts 中枚举的值。
-2. 在 src/app.ts 中增加对应的执行方法。
+1. 增加 constants/template.ts 中枚举的值。
+2. 在 src/template.ts 中增加对应的执行方法。
 
 <br/>
 

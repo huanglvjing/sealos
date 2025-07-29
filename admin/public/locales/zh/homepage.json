@@ -1,0 +1,10 @@
+{
+  "cluster_monitoring": "集群监控",
+  "cluster_overview": "集群总览",
+  "consumption_statistics": "消耗统计",
+  "cost_overview": "成本总览",
+  "statistics_list": "统计列表",
+  "top_100_app_market_deployments": "应用市场部署 TOP 100",
+  "top_100_consuming_users": "消费用户 TOP 100",
+  "user_count_statistics": "用户量统计"
+}

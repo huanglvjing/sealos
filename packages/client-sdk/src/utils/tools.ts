@@ -2,7 +2,7 @@
  * memory format
  */
 export const memoryFormatToMi = (memory: string) => {
-  if (!memory || memory === '0') {
+  if (!memory || memory === "0") {
     return 0;
   }
 
@@ -17,7 +17,7 @@ export const memoryFormatToMi = (memory: string) => {
   } else if (/Ti/gi.test(memory)) {
     value = value * 1024 * 1024;
   } else {
-    console.log('Invalid memory value');
+    console.log("Invalid memory value");
     value = 0;
   }
 
@@ -28,7 +28,7 @@ export const memoryFormatToMi = (memory: string) => {
  * cpu format
  */
 export const cpuFormatToM = (cpu: string) => {
-  if (!cpu || cpu === '0') {
+  if (!cpu || cpu === "0") {
     return 0;
   }
   let value = parseFloat(cpu);

@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const StorageIcon = createIcon({
-  displayName: 'StorageIcon',
-  viewBox: '0 0 40 40',
+  displayName: "StorageIcon",
+  viewBox: "0 0 40 40",
   path: (
     <g fill="none">
       <path
@@ -14,6 +14,6 @@ const StorageIcon = createIcon({
         fill="#7B838B"
       />
     </g>
-  )
+  ),
 });
 export default StorageIcon;

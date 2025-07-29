@@ -1,23 +1,31 @@
-import { v4 } from 'uuid';
-import { API_NAME } from './constants';
-import { AppMessageType, AppSendMessageType, MasterReplyMessageType, SessionV1 } from './types';
-import { isBrowser } from './utils';
+import { v4 } from "uuid";
+import { API_NAME } from "./constants";
+import {
+  AppMessageType,
+  AppSendMessageType,
+  MasterReplyMessageType,
+  SessionV1,
+} from "./types";
+import { isBrowser } from "./utils";
 
 class ClientSDK {
   private readonly eventBus = new Map<string, (e?: any) => any>();
   private initialized = false;
-  private desktopOrigin = '*';
+  private desktopOrigin = "*";
   private commonConfig = {
-    appKey: '',
-    clientLocation: '',
-    success: false
+    appKey: "",
+    clientLocation: "",
+    success: false,
   };
   private userSession: SessionV1 | undefined;
-  private readonly callback = new Map<string, (data: MasterReplyMessageType) => void>();
+  private readonly callback = new Map<
+    string,
+    (data: MasterReplyMessageType) => void
+  >();
   private readonly apiFun: {
     [key: string]: (data: AppMessageType) => void;
   } = {
-    [API_NAME.EVENT_BUS]: (data) => this.runAppEvents(data)
+    [API_NAME.EVENT_BUS]: (data) => this.runAppEvents(data),
   };
 
   private sendMessageToMaster(
@@ -25,7 +33,7 @@ class ClientSDK {
     data: Record<string, any> = {},
     needReply = true
   ): Promise<any> {
-    if (!this.initialized) return Promise.reject('APP is uninitialized');
+    if (!this.initialized) return Promise.reject("APP is uninitialized");
 
     const messageId = v4();
 
@@ -35,7 +43,7 @@ class ClientSDK {
         /* timeout */
         const timer = setTimeout(() => {
           this.callback.delete(messageId);
-          reject('timeout');
+          reject("timeout");
         }, 10000);
 
         this.callback.set(messageId, (data: MasterReplyMessageType) => {
@@ -47,7 +55,7 @@ class ClientSDK {
           }
         });
       } else {
-        resolve('');
+        resolve("");
       }
     });
 
@@ -56,7 +64,7 @@ class ClientSDK {
       messageId,
       apiName,
       ...this.commonConfig,
-      data
+      data,
     };
 
     window.top?.postMessage(sendMessage, this.desktopOrigin);
@@ -65,14 +73,18 @@ class ClientSDK {
   }
 
   init() {
-    console.log('sealos app init');
+    console.log("sealos app init");
     this.commonConfig.clientLocation = window.location.origin;
 
-    const listenCb = ({ data, origin, source }: MessageEvent<AppMessageType>) => {
+    const listenCb = ({
+      data,
+      origin,
+      source,
+    }: MessageEvent<AppMessageType>) => {
       const { apiName, messageId } = data || {};
       if (!source) return;
-      if (apiName && this?.apiFun[data?.apiName]) {
-        return this.apiFun[data.apiName](data);
+      if (apiName && this?.apiFun?.[data?.apiName]) {
+        return this.apiFun?.[data.apiName]?.(data);
       }
       if (messageId && this.callback.has(data?.messageId)) {
         this.desktopOrigin = origin;
@@ -83,13 +95,13 @@ class ClientSDK {
     };
 
     /* add message listen to top */
-    window.addEventListener('message', listenCb);
+    window.addEventListener("message", listenCb);
 
     this.initialized = true;
 
     return () => {
-      console.log('sealos app destroy');
-      window.removeEventListener('message', listenCb);
+      console.log("sealos app destroy");
+      window.removeEventListener("message", listenCb);
     };
   }
 
@@ -110,7 +122,7 @@ class ClientSDK {
   runEvents(eventName: string, eventData?: any) {
     return this.sendMessageToMaster(API_NAME.EVENT_BUS, {
       eventName,
-      eventData
+      eventData,
     });
   }
 
@@ -119,11 +131,11 @@ class ClientSDK {
    */
   addAppEventListen(name: string, fn: (e?: any) => any) {
     if (this.eventBus.has(name)) {
-      console.error('event bus name repeat');
+      console.error("event bus name repeat");
       return;
     }
-    if (typeof fn !== 'function') {
-      console.error('event is not a function');
+    if (typeof fn !== "function") {
+      console.error("event is not a function");
       return;
     }
     this.eventBus.set(name, fn);
@@ -142,9 +154,9 @@ class ClientSDK {
    * run app event bus
    */
   private runAppEvents(data: AppMessageType) {
-    if ('eventName' in data) {
+    if ("eventName" in data) {
       if (!this.eventBus.has(data.eventName)) {
-        console.error('event bus name does not exist');
+        console.error("event bus name does not exist");
         return;
       }
       const eventFunction = this.eventBus.get(data.eventName);
@@ -159,7 +171,7 @@ export let sealosApp: ClientSDK;
 
 export const createSealosApp = () => {
   if (!isBrowser()) {
-    console.error('This method need run in the browser.');
+    console.error("This method need run in the browser.");
     return;
   }
   sealosApp = new ClientSDK();

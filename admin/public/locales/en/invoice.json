@@ -1,0 +1,33 @@
+{
+  "address": "Address",
+  "bank_account": "Bank Account",
+  "bank_name": "Bank Name",
+  "billing_id": "Billing ID",
+  "commit_time": "Commit Time",
+  "company_name": "Company name",
+  "complete_time": "Complete Time",
+  "fax": "Fax",
+  "invoice_amount": "Invoice Amount",
+  "invoice_application": "Invoicing application",
+  "invoice_details": "Invoice Details",
+  "invoice_file": "Invoice File",
+  "invoice_status": {
+    "_self": "Invoice Status",
+    "all": "All",
+    "canceled": "Canceled",
+    "completed": "Completed",
+    "pending": "Pending"
+  },
+  "invoice_title": "Invoice Title",
+  "invoice_type": {
+    "_self": "Invoice Type",
+    "all": "All",
+    "normal": "VAT Ordinary Invoice",
+    "special": "VAT Special Invoice"
+  },
+  "person": "Contact Person",
+  "please_upload_invoice_file": "Please upload the invoice file",
+  "send_invoice_failed": "Failed to upload invoice",
+  "send_invoice_success": "Invoice uploaded successfully",
+  "tax_registration_number": "Tax Registration Number"
+}

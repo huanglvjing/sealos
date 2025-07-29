@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const ChangeIcon = createIcon({
-  displayName: 'ChangeIcon',
-  viewBox: '0 0 16 16',
+  displayName: "ChangeIcon",
+  viewBox: "0 0 16 16",
   path: (
     <g width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -22,5 +22,5 @@ const ChangeIcon = createIcon({
         fill="#152539"
       />
     </g>
-  )
+  ),
 });

@@ -1,22 +1,29 @@
-import { API_NAME } from './constants';
+import { API_NAME } from "./constants";
 import type {
   AppSendMessageType,
   MasterReplyMessageType,
   MasterSendMessageType,
   Session,
-  SessionV1
-} from './types';
-import { isBrowser } from './utils';
-import { getCookie } from './utils/cookieUtils';
+  SessionV1,
+} from "./types";
+import { isBrowser } from "./utils";
+import { getCookie } from "./utils/cookieUtils";
 
 class MasterSDK {
   private readonly eventBus = new Map<string, (e?: any) => any>();
   private readonly apiFun: {
-    [key: string]: (data: AppSendMessageType, source: MessageEventSource, origin: string) => void;
+    [key: string]: (
+      data: AppSendMessageType,
+      source: MessageEventSource,
+      origin: string
+    ) => void;
   } = {
-    [API_NAME.USER_GET_INFO]: (data, source, origin) => this.getUserInfo(data, source, origin),
-    [API_NAME.EVENT_BUS]: (data, source, origin) => this.runEventBus(data, source, origin),
-    [API_NAME.GET_LANGUAGE]: (data, source, origin) => this.getLanguage(data, source, origin)
+    [API_NAME.USER_GET_INFO]: (data, source, origin) =>
+      this.getUserInfo(data, source, origin),
+    [API_NAME.EVENT_BUS]: (data, source, origin) =>
+      this.runEventBus(data, source, origin),
+    [API_NAME.GET_LANGUAGE]: (data, source, origin) =>
+      this.getLanguage(data, source, origin),
   };
 
   constructor() {}
@@ -26,8 +33,8 @@ class MasterSDK {
     origin,
     messageId,
     success,
-    message = '',
-    data = {}
+    message = "",
+    data = {},
   }: MasterReplyMessageType) {
     // if not define source or source is self(Not need send message to self). Skip it
     if (!source || source === window) return;
@@ -38,17 +45,17 @@ class MasterSDK {
         messageId,
         success,
         message,
-        data
+        data,
       },
       {
-        targetOrigin: origin
+        targetOrigin: origin,
       }
     );
   }
 
-  private get session(): SessionV1 | '' {
-    const sessionStr = localStorage.getItem('session');
-    if (!sessionStr) return '';
+  private get session(): SessionV1 | "" {
+    const sessionStr = localStorage.getItem("session");
+    if (!sessionStr) return "";
     const _session = JSON.parse(sessionStr);
     const session = _session?.state?.session as Session;
 
@@ -58,10 +65,10 @@ class MasterSDK {
         k8sUsername: session.user.k8s_username,
         name: session.user.name,
         avatar: session.user.avatar,
-        nsid: session.user.nsid
+        nsid: session.user.nsid,
       },
       token: session.token,
-      kubeconfig: session.kubeconfig
+      kubeconfig: session.kubeconfig,
     };
   }
 
@@ -69,9 +76,13 @@ class MasterSDK {
    * run in hook
    */
   init() {
-    console.log('init desktop onmessage');
+    console.log("init desktop onmessage");
 
-    const windowMessage = ({ data, origin, source }: MessageEvent<AppSendMessageType>) => {
+    const windowMessage = ({
+      data,
+      origin,
+      source,
+    }: MessageEvent<AppSendMessageType>) => {
       const { apiName, messageId } = data || {};
 
       if (!source) return;
@@ -81,17 +92,17 @@ class MasterSDK {
           origin,
           messageId,
           success: false,
-          message: 'params error'
+          message: "params error",
         });
         return;
       }
-      if (typeof this.apiFun[data.apiName] !== 'function') {
+      if (typeof this.apiFun[data.apiName] !== "function") {
         this.replyAppMessage({
           source,
           origin,
           messageId,
           success: false,
-          message: 'function is not declare'
+          message: "function is not declare",
         });
         return;
       }
@@ -99,14 +110,14 @@ class MasterSDK {
       // window check
       console.log(`receive message: `, data, origin);
 
-      this.apiFun[data.apiName](data, source, origin);
+      this.apiFun?.[data.apiName]?.(data, source, origin);
     };
 
-    window.addEventListener('message', windowMessage);
+    window.addEventListener("message", windowMessage);
 
     return () => {
-      window.removeEventListener('message', windowMessage);
-      console.log('stop desktop onmessage');
+      window.removeEventListener("message", windowMessage);
+      console.log("stop desktop onmessage");
     };
   }
 
@@ -115,11 +126,11 @@ class MasterSDK {
    */
   addEventListen(name: string, fn: (e?: any) => any) {
     if (this.eventBus.has(name)) {
-      console.error('event bus name repeat');
+      console.error("event bus name repeat");
       return;
     }
-    if (typeof fn !== 'function') {
-      console.error('event is not a function');
+    if (typeof fn !== "function") {
+      console.error("event is not a function");
       return;
     }
     this.eventBus.set(name, fn);
@@ -137,10 +148,14 @@ class MasterSDK {
   /**
    * run event bus function
    */
-  private async runEventBus(data: AppSendMessageType, source: MessageEventSource, origin: string) {
+  private async runEventBus(
+    data: AppSendMessageType,
+    source: MessageEventSource,
+    origin: string
+  ) {
     const {
       messageId,
-      data: { eventName, eventData }
+      data: { eventName, eventData },
     } = data;
     if (!this.eventBus.has(eventName)) {
       return this.replyAppMessage({
@@ -148,7 +163,7 @@ class MasterSDK {
         origin,
         messageId,
         success: false,
-        message: 'event is not register'
+        message: "event is not register",
       });
     }
     const res = await this.eventBus.get(eventName)?.(eventData);
@@ -157,21 +172,25 @@ class MasterSDK {
       origin,
       messageId,
       success: true,
-      data: res || {}
+      data: res || {},
     });
   }
 
   /**
    * return session to app
    */
-  private getUserInfo(data: AppSendMessageType, source: MessageEventSource, origin: string) {
+  private getUserInfo(
+    data: AppSendMessageType,
+    source: MessageEventSource,
+    origin: string
+  ) {
     if (this.session) {
       this.replyAppMessage({
         source,
         origin,
         messageId: data.messageId,
         success: true,
-        data: this.session
+        data: this.session,
       });
     } else {
       this.replyAppMessage({
@@ -179,7 +198,7 @@ class MasterSDK {
         origin,
         messageId: data.messageId,
         success: false,
-        message: 'no login in'
+        message: "no login in",
       });
     }
   }
@@ -187,7 +206,11 @@ class MasterSDK {
   /**
    * return desktop  language
    */
-  private getLanguage(data: AppSendMessageType, source: MessageEventSource, origin: string) {
+  private getLanguage(
+    data: AppSendMessageType,
+    source: MessageEventSource,
+    origin: string
+  ) {
     if (this.session) {
       this.replyAppMessage({
         source,
@@ -195,8 +218,8 @@ class MasterSDK {
         messageId: data.messageId,
         success: true,
         data: {
-          lng: getCookie('NEXT_LOCALE') || 'zh'
-        }
+          lng: getCookie("NEXT_LOCALE") || "zh",
+        },
       });
     } else {
       this.replyAppMessage({
@@ -204,7 +227,7 @@ class MasterSDK {
         origin,
         messageId: data.messageId,
         success: false,
-        message: 'no login in'
+        message: "no login in",
       });
     }
   }
@@ -213,9 +236,9 @@ class MasterSDK {
    * send message to all app
    */
   sendMessageToAll(data: MasterSendMessageType) {
-    const iframes = document.querySelectorAll('iframe');
+    const iframes = document.querySelectorAll("iframe");
     for (let i = 0; i < iframes.length; i++) {
-      const iframe = iframes[i];
+      const iframe = iframes[i]!;
       iframe.contentWindow?.postMessage(data, iframe?.src);
     }
   }
@@ -225,7 +248,7 @@ export let masterApp: MasterSDK;
 
 export const createMasterAPP = () => {
   if (!isBrowser()) {
-    console.error('This method need run in the browser.');
+    console.error("This method need run in the browser.");
     return;
   }
   masterApp = new MasterSDK();

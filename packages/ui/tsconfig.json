@@ -1,8 +1,10 @@
 {
+  "extends": "../../tsconfig.web.json",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"]
+    "moduleResolution": "Node",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "resolveJsonModule": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
-  "extends": "../../tsconfig.web.json"
+  "exclude": ["node_modules"]
 }

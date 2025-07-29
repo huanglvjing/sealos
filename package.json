@@ -1,12 +1,16 @@
 {
   "name": "sealos",
-  "private": true,
+  "private": "true",
   "version": "0.1.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev-desktop": "pnpm -r --filter ./ run dev",
     "gen:theme-typings": "pnpm chakra-cli tokens packages/ui/src/theme/theme.ts --out node_modules/.pnpm/node_modules/@chakra-ui/styled-system/dist/theming.types.d.ts",
-    "postinstall": "pnpm run gen:theme-typings"
+		"gen:admin-theme-typings": "pnpm chakra-cli tokens admin/src/styles/index.ts --out node_modules/.pnpm/node_modules/@chakra-ui/styled-system/dist/theming.types.d.ts",
+    "gen:sdk": "pnpm -r --filter ./packages/client-sdk run build",
+    "postinstall": "pnpm run gen:theme-typings && pnpm run gen:sdk",
+    "prepare": "husky",
+		"fmt": "prettier --write --ignore-unknown admin/",
+    "test": "pnpm -r --filter./admin/* run test"
   },
   "workspaces": [
     "./packages/*",
@@ -14,9 +18,16 @@
   ],
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",
+    "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.9",
     "prettier": "^2.8.8"
+  },
+  "lint-staged": {
+    "admin/*.{ts,tsx}": [
+      "eslint --max-warnings 0 ."
+    ],
+    "**/*": "prettier --write --ignore-unknown admin/"
   },
   "dependencies": {
     "@chakra-ui/anatomy": "^2.2.1",

@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
   SliderMark,
-  Box
-} from '@chakra-ui/react';
+  Box,
+} from "@chakra-ui/react";
 
 export const MySlider = ({
   markList,
@@ -14,7 +14,7 @@ export const MySlider = ({
   activeVal,
   max = 100,
   min = 0,
-  step = 1
+  step = 1,
 }: {
   markList: {
     label: string | number;
@@ -32,28 +32,40 @@ export const MySlider = ({
   }, [activeVal, markList]);
 
   return (
-    <Slider max={max} min={min} step={step} size={'lg'} value={value} onChange={setVal}>
+    <Slider
+      max={max}
+      min={min}
+      step={step}
+      size={"lg"}
+      value={value}
+      onChange={setVal}
+    >
       {markList.map((item, i) => (
         <SliderMark
           key={item.value}
           value={i}
           mt={3}
-          fontSize={'11px'}
-          transform={'translateX(-50%)'}
-          whiteSpace={'nowrap'}
+          fontSize={"11px"}
+          transform={"translateX(-50%)"}
+          whiteSpace={"nowrap"}
           {...(activeVal === item.value
-            ? { color: 'myGray.900', fontWeight: 'bold' }
-            : { color: 'grayModern.900' })}
+            ? { color: "myGray.900", fontWeight: "bold" }
+            : { color: "grayModern.900" })}
         >
-          <Box px={3} cursor={'pointer'}>
+          <Box px={3} cursor={"pointer"}>
             {item.label}
           </Box>
         </SliderMark>
       ))}
-      <SliderTrack bg={'#EAEDF3'} borderRadius={'4px'} overflow={'hidden'} h={'4px'}>
-        <SliderFilledTrack bg={'grayModern.900'} />
+      <SliderTrack
+        bg={"#EAEDF3"}
+        borderRadius={"4px"}
+        overflow={"hidden"}
+        h={"4px"}
+      >
+        <SliderFilledTrack bg={"grayModern.900"} />
       </SliderTrack>
-      <SliderThumb bg={'grayModern.900'}></SliderThumb>
+      <SliderThumb bg={"grayModern.900"}></SliderThumb>
     </Slider>
   );
 };

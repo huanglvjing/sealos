@@ -1,7 +1,7 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 const ListCheckIcon = createIcon({
-  displayName: 'ListCheckIcon',
-  viewBox: '0 0 24 25',
+  displayName: "ListCheckIcon",
+  viewBox: "0 0 24 25",
   path: (
     <g xmlns="http://www.w3.org/2000/svg" fill="none">
       <path
@@ -12,6 +12,6 @@ const ListCheckIcon = createIcon({
         strokeLinejoin="round"
       />
     </g>
-  )
+  ),
 });
 export default ListCheckIcon;

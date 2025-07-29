@@ -23,7 +23,7 @@ export type Session = {
 };
 
 export type UserQuotaItemType = {
-  type: 'cpu' | 'memory' | 'storage' | 'gpu';
+  type: "cpu" | "memory" | "storage" | "gpu";
   used: number;
   limit: number;
 };

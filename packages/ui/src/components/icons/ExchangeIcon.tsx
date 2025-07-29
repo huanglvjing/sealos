@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from "@chakra-ui/react";
 export default function ExchangeIcon(props: Parameters<typeof Icon>[0]) {
   return (
     <Icon

@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useMemo } from 'react';
+import React, { useRef, forwardRef, useMemo } from "react";
 import {
   Menu,
   Box,
@@ -8,10 +8,10 @@ import {
   useDisclosure,
   useOutsideClick,
   MenuButton,
-  Flex
-} from '@chakra-ui/react';
-import type { ButtonProps } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+  Flex,
+} from "@chakra-ui/react";
+import type { ButtonProps } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface Props extends ButtonProps {
   width?: string;
@@ -30,8 +30,8 @@ const MySelect = (
   {
     placeholder,
     value,
-    width = 'auto',
-    height = '30px',
+    width = "auto",
+    height = "30px",
     list,
     onchange,
     isInvalid,
@@ -47,16 +47,19 @@ const MySelect = (
     ref: SelectRef,
     handler: () => {
       onClose();
-    }
+    },
   });
 
-  const activeMenu = useMemo(() => list.find((item) => item.value === value), [list, value]);
+  const activeMenu = useMemo(
+    () => list.find((item) => item.value === value),
+    [list, value]
+  );
 
   return (
     <Menu autoSelect={false} isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
       <Box
         ref={SelectRef}
-        position={'relative'}
+        position={"relative"}
         onClick={() => {
           isOpen ? onClose() : onOpen();
         }}
@@ -67,34 +70,36 @@ const MySelect = (
           width={width}
           height={height}
           ref={ref}
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          border={'1px solid #E8EBF0'}
-          borderRadius={'md'}
-          fontSize={'12px'}
-          fontWeight={'400'}
-          variant={'outline'}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          border={"1px solid #E8EBF0"}
+          borderRadius={"md"}
+          fontSize={"12px"}
+          fontWeight={"400"}
+          variant={"outline"}
           _hover={{
-            borderColor: 'brightBlue.300',
-            bg: 'grayModern.50'
+            borderColor: "brightBlue.300",
+            bg: "grayModern.50",
           }}
           _active={{
-            transform: ''
+            transform: "",
           }}
           {...(isOpen
             ? {
-                boxShadow: '0px 0px 0px 2.4px rgba(33, 155, 244, 0.15)',
-                borderColor: 'brightBlue.500',
-                bg: '#FFF'
+                boxShadow: "0px 0px 0px 2.4px rgba(33, 155, 244, 0.15)",
+                borderColor: "brightBlue.500",
+                bg: "#FFF",
               }
             : {
-                bg: '#F7F8FA',
-                borderColor: isInvalid ? 'red' : ''
+                bg: "#F7F8FA",
+                borderColor: isInvalid ? "red" : "",
               })}
           {...props}
         >
-          <Flex justifyContent={'flex-start'}>{activeMenu ? activeMenu.label : placeholder}</Flex>
+          <Flex justifyContent={"flex-start"}>
+            {activeMenu ? activeMenu.label : placeholder}
+          </Flex>
         </MenuButton>
 
         <MenuList
@@ -107,30 +112,30 @@ const MySelect = (
               ? width.map((item) => `${item} !important`)
               : `${width} !important`;
           })()}
-          p={'6px'}
-          borderRadius={'base'}
-          border={'1px solid #E8EBF0'}
+          p={"6px"}
+          borderRadius={"base"}
+          border={"1px solid #E8EBF0"}
           boxShadow={
-            '0px 4px 10px 0px rgba(19, 51, 107, 0.10), 0px 0px 1px 0px rgba(19, 51, 107, 0.10)'
+            "0px 4px 10px 0px rgba(19, 51, 107, 0.10), 0px 0px 1px 0px rgba(19, 51, 107, 0.10)"
           }
           zIndex={99}
-          overflow={'overlay'}
-          maxH={'300px'}
+          overflow={"overlay"}
+          maxH={"300px"}
         >
           {list.map((item) => (
             <MenuItem
               key={item.value}
               {...(value === item.value
                 ? {
-                    color: 'brightBlue.600'
+                    color: "brightBlue.600",
                   }
                 : {})}
-              borderRadius={'4px'}
+              borderRadius={"4px"}
               _hover={{
-                bg: 'rgba(17, 24, 36, 0.05)',
-                color: 'brightBlue.600'
+                bg: "rgba(17, 24, 36, 0.05)",
+                color: "brightBlue.600",
               }}
-              p={'6px'}
+              p={"6px"}
               onClick={() => {
                 if (onchange && value !== item.value) {
                   onchange(item.value);

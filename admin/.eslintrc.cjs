@@ -1,21 +1,24 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": true
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: true
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "extends": [
-    "next/core-web-vitals",
+  ignorePatterns: ['node_modules', '.next', 'public', 'instrumentation.js'],
+  plugins: ['@typescript-eslint'],
+  extends: [
+    'next/core-web-vitals',
     // "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked"
+    'plugin:@typescript-eslint/stylistic-type-checked',
+    'prettier'
   ],
+  rules: {
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type']
+  }
   // "rules": {
   //   "@typescript-eslint/array-type": "off",
   //   "@typescript-eslint/consistent-type-definitions": "off",
-	// 	// "@typescript-eslint/no-unsafe-assignment": "off",
+  // 	// "@typescript-eslint/no-unsafe-assignment": "off",
   //   // "@typescript-eslint/no-unsafe-call": "off",
   //   // "@typescript-eslint/no-unsafe-return": "off",
   //   "@typescript-eslint/consistent-type-imports": [
@@ -41,5 +44,5 @@ const config = {
   //     }
   //   ]
   // }
-}
+};
 module.exports = config;

@@ -1,0 +1,14 @@
+{
+  "announcement_log": "通知记录",
+  "announcement_search": "通知搜索",
+  "delete_confirm": "确认删除?",
+  "delete_tips": "删除提示",
+  "input_send_content": "输入发送的内容",
+  "send_announcement": "发送通知",
+  "send_failed": "发送失败",
+  "send_success": "发送成功",
+	"announcement_type":{
+		"_self": "类型",
+		"event":"活动通知"
+	}
+}

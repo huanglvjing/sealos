@@ -1,0 +1,10 @@
+{
+  "cluster_monitoring": "Cluster Monitoring",
+  "cluster_overview": "Cluster Overview",
+  "consumption_statistics": "Consumption Statistics",
+  "cost_overview": "Cost Overview",
+  "statistics_list": "Statistics List",
+  "top_100_app_market_deployments": "Top 100 App Store Deployments",
+  "top_100_consuming_users": "Top 100 Consuming Users",
+  "user_count_statistics": "User Count Statistics"
+}

@@ -1,1 +1,1 @@
-export { initK8s } from './utils/kubernetes';
+export { initK8s } from "./utils/kubernetes";

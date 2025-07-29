@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const WebHostIcon = createIcon({
-  displayName: 'WebHostIcon',
-  viewBox: '0 0 24 25',
+  displayName: "WebHostIcon",
+  viewBox: "0 0 24 25",
   path: (
     <g>
       <path
@@ -22,6 +22,6 @@ const WebHostIcon = createIcon({
         fill="#7B838B"
       />
     </g>
-  )
+  ),
 });
 export default WebHostIcon;

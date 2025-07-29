@@ -1,7 +1,11 @@
-import { CookieAttributes } from 'js-cookie';
-import Cookies from 'js-cookie';
+import { CookieAttributes } from "js-cookie";
+import Cookies from "js-cookie";
 
-export const setCookie = (key: string, value: string, options?: CookieAttributes) => {
+export const setCookie = (
+  key: string,
+  value: string,
+  options?: CookieAttributes
+) => {
   Cookies.set(key, value, options);
 };
 

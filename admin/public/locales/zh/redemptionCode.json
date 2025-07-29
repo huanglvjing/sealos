@@ -1,0 +1,25 @@
+{
+  "code": "兑换码",
+  "code_generation": "兑换码生成",
+  "code_list": "兑换码列表",
+  "code_management": "兑换码管理",
+  "code_status": {
+    "_self": "状态",
+    "all": "全部",
+    "unused": "未使用",
+    "used": "已使用"
+  },
+  "comment": "备注",
+  "create_at": "创建时间",
+  "create_code": "生成兑换码",
+  "create_code_success": "生成兑换码成功",
+  "create_code_tips": "请输入兑换码的数量",
+  "end_at": "结束时间",
+  "expired": "已过期",
+  "expired_at": "过期时间",
+  "export_failed": "导出失败",
+  "generation_count": "生成数量",
+  "prefix": "前缀",
+  "range": "有效期",
+  "used_by": "使用用户ID"
+}

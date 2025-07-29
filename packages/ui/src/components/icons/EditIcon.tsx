@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const EditIcon = createIcon({
-  displayName: 'EditIcon',
-  viewBox: '0 0 16 16',
+  displayName: "EditIcon",
+  viewBox: "0 0 16 16",
   path: (
     <g>
       <path
@@ -18,6 +18,6 @@ const EditIcon = createIcon({
         fill="#5A646E"
       />
     </g>
-  )
+  ),
 });
 export default EditIcon;

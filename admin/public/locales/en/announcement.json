@@ -1,0 +1,14 @@
+{
+  "announcement_log": "Notification record",
+  "send_announcement": "Send notification",
+  "announcement_search": "Search announcement",
+  "delete_confirm": "Confirm deletion?",
+  "delete_tips": "Deletion tips",
+  "input_send_content": "Enter the content to be sent",
+  "send_failed": "Send failed",
+  "send_success": "Send successful",
+  "announcement_type": {
+    "_self": "Type",
+    "event": "Event notification"
+  }
+}

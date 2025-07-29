@@ -1,4 +1,4 @@
-import { EVENT_NAME } from '../constants';
+import { EVENT_NAME } from "../constants";
 
 export type MasterReplyMessageType = {
   source: MessageEventSource;

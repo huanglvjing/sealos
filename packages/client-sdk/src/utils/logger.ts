@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 export function formatTime(date: Date) {
-  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+  return dayjs(date).format("YYYY-MM-DD HH:mm:ss");
 }
 
 export function infoLog(msg: string, obj: Record<string, any> = {}) {
@@ -9,9 +9,19 @@ export function infoLog(msg: string, obj: Record<string, any> = {}) {
 }
 
 export function errLog(msg: string, error: any) {
-  console.log(`[ERROR] %s %s %s`, formatTime(new Date()), msg, JSON.stringify(error));
+  console.log(
+    `[ERROR] %s %s %s`,
+    formatTime(new Date()),
+    msg,
+    JSON.stringify(error)
+  );
 }
 
 export function warnLog(msg: string, obj: Record<string, any> = {}) {
-  console.log(`[WARN] %s %s %s`, formatTime(new Date()), msg, JSON.stringify(obj));
+  console.log(
+    `[WARN] %s %s %s`,
+    formatTime(new Date()),
+    msg,
+    JSON.stringify(obj)
+  );
 }

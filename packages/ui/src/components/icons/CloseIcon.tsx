@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/react';
+import { Icon, IconProps } from "@chakra-ui/react";
 
 export default function CloseIcon(props: IconProps) {
   return (
@@ -7,7 +7,7 @@ export default function CloseIcon(props: IconProps) {
       width="16px"
       height="16px"
       viewBox="0 0 16 16"
-      fill={'#D92D20'}
+      fill={"#D92D20"}
       {...props}
     >
       <path

@@ -1,8 +1,8 @@
-import { createIcon } from '@chakra-ui/react';
+import { createIcon } from "@chakra-ui/react";
 
 const ArrowExchangeIcon = createIcon({
-  displayName: 'ArrowExchangeIcon',
-  viewBox: '0 0 16 17',
+  displayName: "ArrowExchangeIcon",
+  viewBox: "0 0 16 17",
   path: (
     <g fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -13,6 +13,6 @@ const ArrowExchangeIcon = createIcon({
         strokeLinejoin="round"
       />
     </g>
-  )
+  ),
 });
 export default ArrowExchangeIcon;

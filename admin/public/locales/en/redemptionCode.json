@@ -1,0 +1,26 @@
+{
+  "code": "Code",
+  "code_generation": "Redemption Code Generation",
+  "code_list": "Code List",
+  "code_management": "Redemption Code Management",
+  "code_status": {
+    "_self": "Status",
+    "all": "All",
+    "unused": "Unused",
+    "used": "Used"
+  },
+  "comment": "Comment",
+  "create_at": "Created At",
+  "create_code": "Create Redemption Code",
+  "create_code_success": "Redemption Code Created Successfully",
+  "create_code_tips": "Please enter the quantity of redemption codes to be generated",
+  "create_date": "Create Date",
+  "end_at": "End Time",
+  "expired": "Expired",
+  "expired_at": "Expired Time",
+  "export_failed": "Export Failed",
+  "generation_count": "Generation Count",
+  "prefix": "Prefix",
+  "range": "Range",
+  "used_by": "Used by User ID"
+}

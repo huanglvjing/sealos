@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from "@chakra-ui/react";
 export default function CancelIcon(props: Parameters<typeof Icon>[0]) {
   return (
     <Icon viewBox="0 0 17 17" fill="none" {...props}>

@@ -1,6 +1,9 @@
 {
   "extends": "../../tsconfig.deps.json",
   "compilerOptions": {
+    "moduleResolution": "Node",
+    "resolveJsonModule": false,
+    // "module": "CommonJS",
     "lib": ["es2017", "DOM"],
     "noImplicitAny": true
   },

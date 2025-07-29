@@ -1,12 +1,12 @@
-import { Button } from './Button';
-import { Input } from './Input';
-import { Select } from './Select';
-import { Tag } from './Tag';
-import { Switch } from './Switch';
-import { Textarea } from './Textarea';
-import { Slider } from './Slider';
-import { Modal } from './Modal';
-import { NumberInput } from './NumberInput';
+import { Button } from "./Button";
+import { Input } from "./Input";
+import { Select } from "./Select";
+import { Tag } from "./Tag";
+import { Switch } from "./Switch";
+import { Textarea } from "./Textarea";
+import { Slider } from "./Slider";
+import { Modal } from "./Modal";
+import { NumberInput } from "./NumberInput";
 
 export const components = {
   Button,
@@ -17,7 +17,7 @@ export const components = {
   Textarea,
   Slider,
   Modal,
-  NumberInput
+  NumberInput,
 };
 
 // export * from './Button';
