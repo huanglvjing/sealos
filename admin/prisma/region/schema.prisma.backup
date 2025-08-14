@@ -55,4 +55,3 @@ enum Role {
   DEVELOPER
   OWNER
 }
-

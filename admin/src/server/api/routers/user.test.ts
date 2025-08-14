@@ -209,19 +209,19 @@ test('get quota', async () => {
 }, 10000);
 
 test('get remote quota', async () => {
-  const ctx = createInnerTRPCContext({
-    auth: undefined
-  });
-  const caller = createCaller(ctx);
-
-  type Input = inferProcedureInput<AppRouter['user']['getRemoteQuota']>;
-  const input: Input = {
-    id: 'fKoCmbXnw3',
-    //domain: '192.168.0.75.nip.io'
-    domain: '127.0.0.1:3000'
-  };
-  const quota = await caller.user.getRemoteQuota(input);
-  console.log(JSON.stringify(quota, null, 2));
+  // 这个方法已经被注释掉了，所以这个测试也需要注释掉
+  // const ctx = createInnerTRPCContext({
+  //   auth: undefined
+  // });
+  // const caller = createCaller(ctx);
+  // type Input = inferProcedureInput<AppRouter['user']['getRemoteQuota']>;
+  // const input: Input = {
+  //   id: 'fKoCmbXnw3',
+  //   //domain: '192.168.0.75.nip.io'
+  //   domain: '127.0.0.1:3000'
+  // };
+  // const quota = await caller.user.getRemoteQuota(input);
+  // console.log(JSON.stringify(quota, null, 2));
 }, 10000);
 
 test('update quota', async () => {
@@ -233,57 +233,61 @@ test('update quota', async () => {
   type Input = inferProcedureInput<AppRouter['user']['updateQuota']>;
   const input: Input = {
     ns: 'ns-5zk3fb05',
-    quotaMap: new Map([["cpu", {value: 1000, unit: 'c'}], ["memory", {value: 1280, unit: 'Gi'}], ["storage", {value: 1000, unit: 'Gi'}]])
+    quotaMap: new Map([
+      ['cpu', { value: 1000, unit: 'c' }],
+      ['memory', { value: 1280, unit: 'Gi' }],
+      ['storage', { value: 1000, unit: 'Gi' }]
+    ])
   };
   const resp = await caller.user.updateQuota(input);
   console.log(resp);
 });
 
 test('update remote quota', async () => {
-  const ctx = createInnerTRPCContext({
-    auth: undefined
-  });
-  const caller = createCaller(ctx);
-
-  type Input = inferProcedureInput<AppRouter['user']['updateRemoteQuota']>;
-  const input: Input = {
-    // domain: '192.168.0.55.nip.io',
-    domain: '127.0.0.1:3000',
-    ns: 'ns-5zk3fb05',
-    quotaMap: new Map([['objectstorage/size', '100Gi']])
-  };
-  const resp = await caller.user.updateRemoteQuota(input);
-  console.log(JSON.stringify(resp, null, 2));
+  // 这个方法已经被注释掉了，所以这个测试也需要注释掉
+  // const ctx = createInnerTRPCContext({
+  //   auth: undefined
+  // });
+  // const caller = createCaller(ctx);
+  // type Input = inferProcedureInput<AppRouter['user']['updateRemoteQuota']>;
+  // const input: Input = {
+  //   // domain: '192.168.0.55.nip.io',
+  //   domain: '127.0.0.1:3000',
+  //   ns: 'ns-5zk3fb05',
+  //   quotaMap: new Map([['objectstorage/size', '100Gi']])
+  // };
+  // const resp = await caller.user.updateRemoteQuota(input);
+  // console.log(JSON.stringify(resp, null, 2));
 });
 
 test('get ns', async () => {
-  const ctx = createInnerTRPCContext({
-    auth: undefined
-  });
-  const caller = createCaller(ctx);
-
-  type Input = inferProcedureInput<AppRouter['user']['getNS']>;
-  const input: Input = {
-    id: 'fKoCmbXnw3',
-    domain: '192.168.0.55.nip.io'
-  };
-  const ns = await caller.user.getNS(input);
-  console.log(JSON.stringify(ns, null, 2));
+  // 这个方法已经被注释掉了，所以这个测试也需要注释掉
+  // const ctx = createInnerTRPCContext({
+  //   auth: undefined
+  // });
+  // const caller = createCaller(ctx);
+  // type Input = inferProcedureInput<AppRouter['user']['getNS']>;
+  // const input: Input = {
+  //   id: 'fKoCmbXnw3',
+  //   domain: '192.168.0.55.nip.io'
+  // };
+  // const ns = await caller.user.getNS(input);
+  // console.log(JSON.stringify(ns, null, 2));
 }, 10000);
 
 test('get remote ns', async () => {
-  const ctx = createInnerTRPCContext({
-    auth: undefined
-  });
-  const caller = createCaller(ctx);
-
-  type Input = inferProcedureInput<AppRouter['user']['getNS']>;
-  const input: Input = {
-    id: 'fKoCmbXnw3',
-    domain: '192.168.0.55.nip.io'
-  };
-  const ns = await caller.user.getNS(input);
-  console.log(JSON.stringify(ns, null, 2));
+  // 这个方法已经被注释掉了，所以这个测试也需要注释掉
+  // const ctx = createInnerTRPCContext({
+  //   auth: undefined
+  // });
+  // const caller = createCaller(ctx);
+  // type Input = inferProcedureInput<AppRouter['user']['getNS']>;
+  // const input: Input = {
+  //   id: 'fKoCmbXnw3',
+  //   domain: '192.168.0.55.nip.io'
+  // };
+  // const ns = await caller.user.getNS(input);
+  // console.log(JSON.stringify(ns, null, 2));
 }, 10000);
 
 test('get app list', async () => {
@@ -309,12 +313,11 @@ test('get grafana cluster', async () => {
 
   type Input = inferProcedureInput<AppRouter['user']['getGrafanaCluster']>;
   const input: Input = {
-    domain: "cloud.sealos.io"
+    domain: 'cloud.sealos.io'
   };
   const link = await caller.user.getGrafanaCluster(input);
   console.log(link);
 });
-
 
 test('get grafana cluster', async () => {
   const ctx = createInnerTRPCContext({
@@ -324,7 +327,7 @@ test('get grafana cluster', async () => {
 
   type Input = inferProcedureInput<AppRouter['user']['getGrafanaCluster']>;
   const input: Input = {
-    domain: "cloud.sealos.io"
+    domain: 'cloud.sealos.io'
   };
   const link = await caller.user.getGrafanaCluster(input);
   console.log(link);
@@ -340,7 +343,7 @@ test('get grafana other', async () => {
   const input: Input = {
     // type: "consumption"
     //type: "sealosBusiness"
-    type: "lafBusiness"
+    type: 'lafBusiness'
   };
   const link = await caller.user.getGrafanaOther(input);
   console.log(link);

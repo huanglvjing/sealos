@@ -27,6 +27,17 @@ import { newK8sClient } from '../db/init';
 
 type CreateContextOptions = Record<string, never>;
 
+// 定义用户信息类型
+type UserInfo = {
+  userUid: string;
+  userCrUid: string;
+  userCrName: string;
+  regionUid: string;
+  userId: string;
+  workspaceId: string;
+  workspaceUid: string;
+};
+
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
  * it from here.
@@ -38,33 +49,37 @@ type CreateContextOptions = Record<string, never>;
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
 
-export const createInnerTRPCContext = (_opts: { auth: string | undefined, req?: CreateNextContextOptions['req'] }) => {
-
-	return {
-		db: {
-			globalPrisma: globalPrisma,
-			regionPrisma: regionPrisma,
-			regionMongoClient: regionMongoClient
-		},
-		email: {
-			testTo: env.email_test_to
-		},
-		k8s: {
-			k8sClient: newK8sClient(),
-			tokenUrlPrefix: env.tokenUrlPrefix ?? '',
-			domain: env.domain ?? '',
-			generateToken: env.generateToken ?? '',
-			verifyToken: env.verifyToken ?? ''
-		},
-		grafana: {
-			grafanaConsumption: env.grafanaConsumption ?? '',
-			grafanaSealosBusiness: env.grafanaSealosBusiness ?? '',
-			grafanaLafBusiness: env.grafanaLafBusiness ?? '',
-			clusterGrafanaKeyList: env.clusterGrafanaKeyList,
-			clusterGrafanaValList: env.clusterGrafanaValList
-		},
-		httpclient: _opts
-	};
+export const createInnerTRPCContext = (_opts: {
+  auth: string | undefined;
+  req?: CreateNextContextOptions['req'];
+  user?: UserInfo;
+}) => {
+  return {
+    db: {
+      globalPrisma: globalPrisma,
+      regionPrisma: regionPrisma,
+      regionMongoClient: regionMongoClient
+    },
+    email: {
+      testTo: env.email_test_to
+    },
+    k8s: {
+      k8sClient: newK8sClient(),
+      tokenUrlPrefix: env.tokenUrlPrefix ?? '',
+      domain: env.domain ?? '',
+      generateToken: env.generateToken ?? '',
+      verifyToken: env.verifyToken ?? ''
+    },
+    grafana: {
+      grafanaConsumption: env.grafanaConsumption ?? '',
+      grafanaSealosBusiness: env.grafanaSealosBusiness ?? '',
+      grafanaLafBusiness: env.grafanaLafBusiness ?? '',
+      clusterGrafanaKeyList: env.clusterGrafanaKeyList,
+      clusterGrafanaValList: env.clusterGrafanaValList
+    },
+    httpclient: _opts,
+    user: _opts.user
+  };
 };
 
 /**
@@ -74,10 +89,10 @@ export const createInnerTRPCContext = (_opts: { auth: string | undefined, req?: 
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts?: CreateNextContextOptions) => {
-	return createInnerTRPCContext({
-		auth: _opts?.req.headers.authorization,
-		req: _opts?.req
-	});
+  return createInnerTRPCContext({
+    auth: _opts?.req.headers.authorization,
+    req: _opts?.req
+  });
 };
 
 /**
@@ -89,16 +104,16 @@ export const createTRPCContext = (_opts?: CreateNextContextOptions) => {
  */
 
 export const t = initTRPC.context<typeof createTRPCContext>().create({
-	transformer: superjson,
-	errorFormatter({ shape, error, input }) {
-		return {
-			...shape,
-			data: {
-				...shape.data,
-				zodError: error.cause instanceof ZodError ? error.cause.flatten() : null
-			}
-		};
-	}
+  transformer: superjson,
+  errorFormatter({ shape, error, input }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null
+      }
+    };
+  }
 });
 
 /**
@@ -129,110 +144,119 @@ export const createTRPCRouter = t.router;
  * network latency that would occur in production but not in local development.
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
-	const start = Date.now();
+  const start = Date.now();
 
-	if (t._config.isDev) {
-		// artificial delay in dev
-		const waitMs = Math.floor(Math.random() * 400) + 100;
-		await new Promise((resolve) => setTimeout(resolve, waitMs));
-	}
+  if (t._config.isDev) {
+    // artificial delay in dev
+    const waitMs = Math.floor(Math.random() * 400) + 100;
+    await new Promise((resolve) => setTimeout(resolve, waitMs));
+  }
 
-	const result = await next();
+  const result = await next();
 
-	const end = Date.now();
-	console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
+  const end = Date.now();
+  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
 
-	return result; t
+  return result;
 });
 
 const tokenMiddleware = t.middleware(async ({ ctx, next }) => {
+  const result = await verifyToken<UserInfo>(
+    ctx.httpclient.auth?.split(' ')[1] ?? '',
+    env.verifyToken
+  );
 
-	const result = await verifyToken<
-	{
-			userUid: string,
-			userCrUid: string,
-			userCrName: string,
-			regionUid: string,
-			userId: string,
-			workspaceId: string,
-			workspaceUid: string,
-	}>(
-		ctx.httpclient.auth?.split(' ')[1] ?? '',
-		env.verifyToken
-	);
-	
-	if (!result.valid  || !env.adminList.split(',').includes(result.payload.userId)) {
-		throw new TRPCError({
-			code: 'UNAUTHORIZED',
-			message: 'Error verifying token'
-		})
-	}
-	return next();
+  console.log('验证 token 结果:', result);
+  console.log('环境变量 verifyToken:', env.verifyToken);
+  console.log('请求中的 token:', ctx.httpclient.auth?.split(' ')[1]);
+
+  if (!result.valid) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'Error verifying token'
+    });
+  }
+
+  // 打印用户信息到终端
+  console.log('===== 用户信息 =====');
+  console.log('用户 ID:', result.payload.userId);
+  console.log('用户 UID:', result.payload.userUid);
+  console.log('用户名:', result.payload.userCrName);
+  console.log('区域 UID:', result.payload.regionUid);
+  console.log('工作空间 ID:', result.payload.workspaceId);
+  console.log('==================');
+
+  if (!env.adminList.split(',').includes(result.payload.userId)) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'Not in admin list'
+    });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      user: result.payload
+    }
+  });
 });
 
-function verifyToken<T extends JwtPayload>(
-	token: string,
-	verifyToken: string
-) {
-	return new Promise<{ valid: false } | { valid: true, payload: T }>((res, rej) => {
-		jwt.verify(token, verifyToken, (err, decodedToken) => {
-			if (err) {
-				// console('Error verifying token:', err);
-				return res({
-					valid: false,
-				} as const);
-			}
-			return res({
-				valid: true,
-				payload: decodedToken as T
-			} as const);
-		});
-	});
+function verifyToken<T extends JwtPayload>(token: string, verifyToken: string) {
+  return new Promise<{ valid: false } | { valid: true; payload: T }>((res, rej) => {
+    jwt.verify(token, verifyToken, (err, decodedToken) => {
+      if (err) {
+        console.log('Token 验证错误:', err.message);
+        return res({
+          valid: false
+        } as const);
+      }
+      return res({
+        valid: true,
+        payload: decodedToken as T
+      } as const);
+    });
+  });
 }
 
-export const otherRegionMiddlewareFactory = (qT: 'mutation' | 'query', redirect?: string)=>t.middleware(async ({input, meta, next, ctx,getRawInput , path, ...opts})=>{
-	const result = regionSchema.safeParse(input)
-	const regionUid = result.data?.regionUid
-	if (!result.success || !regionUid
-		||  regionUid === env.regionUid
-	) {
-		return next()
-	}
-	const region = await ctx.db.globalPrisma.region.findUnique({
-		where: {
-			uid: regionUid
-		}
-	})
-	if (!region) {
-		return next()
-	}
-	const regionDomain = env.NODE_ENV === 'development' ? '127.0.0.1:3001' : `${env.subDomain}.` + region.domain
-	// const data = 
-	const url = `http://${regionDomain}/api/trpc`;
+export const otherRegionMiddlewareFactory = (qT: 'mutation' | 'query', redirect?: string) =>
+  t.middleware(async ({ input, meta, next, ctx, getRawInput, path, ...opts }) => {
+    const result = regionSchema.safeParse(input);
+    const regionUid = result.data?.regionUid;
+    if (!result.success || !regionUid || regionUid === env.regionUid) {
+      return next();
+    }
+    const region = await ctx.db.globalPrisma.region.findUnique({
+      where: {
+        uid: regionUid
+      }
+    });
+    if (!region) {
+      return next();
+    }
+    const regionDomain =
+      env.NODE_ENV === 'development' ? '127.0.0.1:3001' : `${env.subDomain}.` + region.domain;
+    // const data =
+    const url = `http://${regionDomain}/api/trpc`;
 
-	const authorization = ctx.httpclient.req?.headers.authorization!;
-	const client = apiFactory(url, () => authorization);
-	// @ts-ignore
-	env.NODE_ENV === 'development' && (input.regionUid = undefined)
-	const otherRegionResponse = await client[qT](redirect ?? path, input);
-	const middlewareResult: MiddlewareResult<any> = {
-		ok: true,
-		data: otherRegionResponse,
-		marker: middlewareMarker
-	}
-	return middlewareResult
-})
+    const authorization = ctx.httpclient.req?.headers.authorization!;
+    const client = apiFactory(url, () => authorization);
+    // @ts-ignore
+    env.NODE_ENV === 'development' && (input.regionUid = undefined);
+    const otherRegionResponse = await client[qT](redirect ?? path, input);
+    const middlewareResult: MiddlewareResult<any> = {
+      ok: true,
+      data: otherRegionResponse,
+      marker: middlewareMarker
+    };
+    return middlewareResult;
+  });
 
 /**
- * Public (unauthenticated) procedure
+ * Private (authenticated) procedure
  *
- * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
- * guarantee that a user querying is authorized, but you can still access user session data if they
- * are logged in.
+ * This procedure includes authentication and user information in the context.
+ * You can access ctx.user.userId, ctx.user.userUid, etc. in your procedures.
  */
-export const privateProcedure = t.procedure
-	.use(timingMiddleware)
-	.use(tokenMiddleware)
+export const privateProcedure = t.procedure.use(timingMiddleware).use(tokenMiddleware);
 
 export const publicProcedure = t.procedure;
-

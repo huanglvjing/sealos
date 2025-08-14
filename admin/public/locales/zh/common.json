@@ -215,6 +215,18 @@
   "workspace_id": "工作空间 ID",
   "workspace_name": "工作空间名",
   "year": "年",
+  "refund_management": "退款管理",
+  "pay_record_management": "对公支付管理",
+  "TEST_RECHARGE": "测试充值",
+  "COMPENSATION_RECHARGE": "补偿充值",
+  "ACTIVITY_RECHARGE": "活动充值",
+  "CORPORATE_RECHARGE": "对公充值",
+  "EXTERNAL_USER": "外部用户",
+  "INTERNAL_EMPLOYEE": "内部员工",
+  "SEALOS": "Sealos",
+  "FASTGPT": "FastGPT",
+  "LAF_SEALAF": "Laf/Sealaf",
+  "AI_PROXY": "AI Proxy",
   "common": {
     "user_id": "用户ID"
   }

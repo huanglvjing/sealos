@@ -4,7 +4,15 @@
  *
  * We also create a few inference helpers for input and output types.
  */
-import { httpBatchLink, HTTPHeaders, httpLink, isFormData, isNonJsonSerializable, loggerLink, splitLink } from '@trpc/client';
+import {
+  httpBatchLink,
+  HTTPHeaders,
+  httpLink,
+  isFormData,
+  isNonJsonSerializable,
+  loggerLink,
+  splitLink
+} from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server';
 import { defaultTransformer } from '@trpc/server/unstable-core-do-not-import';
@@ -46,54 +54,54 @@ export const api = createTRPCNext<AppRouter>({
             process.env.NODE_ENV === 'development' ||
             (opts.direction === 'down' && opts.result instanceof Error)
         }),
-				splitLink({
-          condition({input}) {
+        splitLink({
+          condition({ input }) {
             // const { nextType } = op.direction === 'up'? op : op.op;
             // return nextType ==='subscription';
-						console.log()
+            console.log();
             // check for `@trpc/server/http` header
-						const is = isFormData(input)
-						console.log('opis!!!', is)
-						console.log('nojson', isNonJsonSerializable(input))
+            const is = isFormData(input);
+            console.log('opis!!!', is);
+            console.log('nojson', isNonJsonSerializable(input));
             return is;
           },
           true: httpLink({
             url: `${getBaseUrl()}/api/trpc`,
-						transformer: defaultTransformer,
-						headers() {
-							const req = ctx?.req;
-							console.log(req?.headers)
-							const headers: HTTPHeaders = {}
-							if (!req?.headers) {
-							headers.Authorization = `Bearer ${useSessionStore.getState().getSession().token}`;
-							} else {
-								headers.Authorization = req.headers.authorization;
-							}
-							return headers;
-						}
+            transformer: defaultTransformer,
+            headers() {
+              const req = ctx?.req;
+              console.log(req?.headers);
+              const headers: HTTPHeaders = {};
+              if (!req?.headers) {
+                headers.Authorization = `Bearer ${useSessionStore.getState().getSession().token}`;
+              } else {
+                headers.Authorization = req.headers.authorization;
+              }
+              return headers;
+            }
           }),
-					false: httpBatchLink({
-						/**
-						 * Transformer used for data de-serialization from the server.
-						 *
-						 * @see https://trpc.io/docs/data-transformers
-						 */
-						transformer: superjson,
-						url: `${getBaseUrl()}/api/trpc`,
-						headers() {
-							const req = ctx?.req;
-							console.log(req?.headers)
-							const headers: HTTPHeaders = {}
-							if (!req?.headers) {
-							headers.Authorization = `Bearer ${useSessionStore.getState().getSession().token}`;
-							} else {
-								headers.Authorization = req.headers.authorization;
-							}
-							return headers;
-						}
-					})
-				}),
-
+          false: httpBatchLink({
+            /**
+             * Transformer used for data de-serialization from the server.
+             *
+             * @see https://trpc.io/docs/data-transformers
+             */
+            transformer: superjson,
+            url: `${getBaseUrl()}/api/trpc`,
+            headers() {
+              const req = ctx?.req;
+              console.log(req?.headers);
+              const headers: HTTPHeaders = {};
+              if (!req?.headers) {
+                headers.Authorization = `Bearer ${useSessionStore.getState().getSession().token}`;
+                console.log(useSessionStore.getState().getSession().token);
+              } else {
+                headers.Authorization = req.headers.authorization;
+              }
+              return headers;
+            }
+          })
+        })
       ]
     };
   },

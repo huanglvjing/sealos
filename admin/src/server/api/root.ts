@@ -7,7 +7,8 @@ import { codeRouter } from './routers/code';
 import { domainRouter } from './routers/domain';
 import { healthRouter } from './routers/health';
 import { invoiceRouter } from './routers/invoice';
-
+import { refundRouter } from './routers/refund';
+import { corporatePaymentRouter } from './routers/payRecord';
 /**
  * This is the primary router for your server.
  *
@@ -17,11 +18,13 @@ export const appRouter = createTRPCRouter({
   base: baseRouter,
   user: userRouter,
   appstore: appstoreRouter,
-	domain: domainRouter,
-	invoice: invoiceRouter,
-	health: healthRouter,
-	announcement: announcementRouter,
-	code: codeRouter
+  domain: domainRouter,
+  invoice: invoiceRouter,
+  health: healthRouter,
+  announcement: announcementRouter,
+  refund: refundRouter,
+  corporatePayment: corporatePaymentRouter,
+  code: codeRouter
 });
 
 // export type definition of API

@@ -181,6 +181,17 @@
   "workspace_id": "Worksapce ID",
   "workspace_name": "Workspace Name",
   "year": "Year",
+  "refund_management": "Refund Management",
+  "pay_record_management": "Pay Record Management",
+  "EXTERNAL_USER": "EXTERNAL_USER",
+  "INTERNAL_EMPLOYEE": "INTERNAL_EMPLOYEE",
+  "SEALOS": "SEALOS",
+  "LAF_SEALAF": "LAF_SEALAF",
+  "AI_PROXY": "AI_PROXY",
+  "TEST_RECHARGE": "TEST_RECHARGE",
+  "COMPENSATION_RECHARGE": "COMPENSATION_RECHARGE", 
+  "ACTIVITY_RECHARGE": "ACTIVITY_RECHARGE",
+  "CORPORATE_RECHARGE": "CORPORATE_RECHARGE",
   "common": {
     "user_id": "user ID"
   }
