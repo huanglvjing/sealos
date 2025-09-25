@@ -171,7 +171,6 @@ class ServiceManager {
             }))
           ];
           
-          // 使用 JSON Merge Patch 原子更新
           await this.k8sCore.patchNamespacedService(
             devboxName,
             this.namespace,
@@ -339,7 +338,7 @@ async function createPortsAndNetworks(
           number: portConfig.number,
           protocol: portConfig.protocol || 'HTTP',
           networkName: '',
-          exposesPublicDomain: portConfig.exposesPublicDomain || false, // ✅ 保持原始值
+          exposesPublicDomain: portConfig.exposesPublicDomain || false, 
           publicDomain: '',
           customDomain: portConfig.customDomain || '',
           serviceName: devboxName,
