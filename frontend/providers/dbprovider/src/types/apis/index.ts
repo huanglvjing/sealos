@@ -12,6 +12,9 @@ export * as startDatabaseSchemas from './database/start-database';
 import * as pauseDatabaseSchemas from './database/pause-database';
 export * as pauseDatabaseSchemas from './database/pause-database';
 
+import * as restartDatabaseSchemas from './database/restart-database';
+export * as restartDatabaseSchemas from './database/restart-database';
+
 import * as getDatabaseSchemas from './database/get-database';
 export * as getDatabaseSchemas from './database/get-database';
 
@@ -589,6 +592,33 @@ export const document = createDocument({
             content: {
               'application/json': {
                 schema: pauseDatabaseSchemas.response
+              }
+            }
+          }
+        }
+      }
+    },
+    '/database/{databaseName}/restart': {
+      post: {
+        summary: 'Restart Database',
+        description: 'Restart a database.',
+        security: [{ KubeconfigAuth: [] }],
+        parameters: [
+          {
+            name: 'databaseName',
+            in: 'path',
+            required: true,
+            schema: {
+              type: 'string'
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'OK',
+            content: {
+              'application/json': {
+                schema: restartDatabaseSchemas.response
               }
             }
           }
