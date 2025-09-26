@@ -14,12 +14,15 @@ export async function restartDatabase(
   },
   req: NextApiRequest
 ) {
-  // Get cluster information
   const body = await getCluster(req, request.params.databaseName);
-
-  // Create restart operation YAML and apply it
+  const rawDbType = body?.metadata?.labels['clusterdefinition.kubeblocks.io/name'];
+  if (!rawDbType) {
+    throw new Error('Unable to determine database type from cluster metadata');
+  }
+  const dbType = (rawDbType as string) === 'mysql' ? 'apecloud-mysql' : rawDbType;
   const yaml = json2BasicOps({
     dbName: request.params.databaseName,
+    dbType: dbType,
     type: 'Restart'
   });
   await k8s.applyYamlList([yaml], 'update');
